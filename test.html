@@ -2,177 +2,624 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DTM Grammar Quiz</title>
 
     <style>
       body {
-        font-family: Arial;
+        font-family: Arial, sans-serif;
         background: #f4f4f4;
         padding: 20px;
+        margin: 0;
       }
 
       .container {
         max-width: 800px;
-        margin: auto;
+        margin: 40px auto;
         background: white;
-        padding: 20px;
+        padding: 30px;
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       }
 
       h2 {
         text-align: center;
+        color: #333;
+        margin-bottom: 25px;
+      }
+
+      .question-info {
+        font-size: 14px;
+        color: #7f8c8d;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
       }
 
       .question {
         font-size: 20px;
-        margin: 15px 0;
+        margin: 0 0 20px 0;
+        font-weight: bold;
+        color: #2c3e50;
+        line-height: 1.4;
       }
 
       .option {
-        padding: 10px;
-        margin: 8px 0;
-        border: 1px solid #ddd;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border: 2px solid #e0e0e0;
         border-radius: 6px;
         cursor: pointer;
-        transition: 0.3s;
+        font-size: 16px;
+        transition: all 0.2s ease;
+        background: #fff;
       }
 
       .option:hover {
-        background: #eee;
+        background: #f8f9fa;
+        border-color: #b0bec5;
       }
 
       .correct {
-        background: #4caf50;
-        color: white;
+        background: #4caf50 !important;
+        color: white !important;
+        border-color: #4caf50 !important;
       }
 
       .wrong {
-        background: #f44336;
-        color: white;
+        background: #f44336 !important;
+        color: white !important;
+        border-color: #f44336 !important;
       }
 
-      button {
-        padding: 10px 15px;
-        margin-top: 10px;
-        border: none;
-        background: #2196f3;
+      .disabled {
+        pointer-events: none;
+        opacity: 0.8;
+      }
+
+      /* Responsive Test Button */
+      .test-btn {
+        padding: 12px 24px;
+        background: #2563eb;
         color: white;
-        border-radius: 6px;
+        border: none;
+        border-radius: 8px;
         cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-block;
+        width: auto;
+        max-width: 100%;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        margin-top: 20px;
+      }
+
+      .test-btn:hover {
+        background: #1e40af;
+        transform: scale(1.05);
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 15px;
+          margin: 20px auto;
+        }
+        .question {
+          font-size: 18px;
+        }
+        .test-btn {
+          padding: 14px 20px;
+          font-size: 15px;
+          width: 100%;
+          text-align: center;
+        }
+        .test-btn:hover {
+          transform: scale(1.02);
+        }
+      }
+
+      #score {
+        margin-top: 25px;
+        font-size: 22px;
+        text-align: center;
+        color: #2c3e50;
+      }
+
+      .result-title {
+        text-align: center;
+        color: #2ecc71;
+        font-size: 26px;
       }
     </style>
   </head>
 
   <body>
     <div class="container">
-      <h2>DTM Grammar Quiz (60 Questions)</h2>
+      <h2>DTM Grammar Quiz</h2>
 
       <div id="quiz"></div>
 
-      <button onclick="nextQ()">Next</button>
+      <button class="test-btn" onclick="nextQ()">Next</button>
 
       <h3 id="score"></h3>
     </div>
 
     <script>
-      // =======================
-      // QUESTIONS (60 total)
-      // =======================
+      // =========================================================================
+      // QUESTIONS (60 unique DTM-style questions: 30 Nouns + 30 Pronouns)
+      // =========================================================================
 
       const questions = [
-        /* =======================
-NOUNS (30)
-======================= */
-
-        ...Array.from({ length: 30 }, (_, i) => ({
+        // --- NOUNS (1-30) ---
+        {
           topic: "Nouns",
-          question: `Choose correct plural form #${i + 1}`,
-          options: ["book", "books", "bookes", "bok"],
-          answer: "books",
-        })),
+          question: "Choose the correct plural form of 'criterion'.",
+          options: ["criterions", "criteria", "criterias", "criteri"],
+          answer: "criteria",
+        },
+        {
+          topic: "Nouns",
+          question: "Identify the uncountable noun from the options.",
+          options: ["luggage", "bag", "suitcase", "journey"],
+          answer: "luggage",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'passer-by'.",
+          options: ["passers-by", "passer-bies", "passers-bys", "passer-bys"],
+          answer: "passers-by",
+        },
+        {
+          topic: "Nouns",
+          question: "Which of the following nouns is always plural in form?",
+          options: ["news", "scissors", "mathematics", "physics"],
+          answer: "scissors",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'sheep'.",
+          options: ["sheeps", "sheepes", "sheep", "shoop"],
+          answer: "sheep",
+        },
+        {
+          topic: "Nouns",
+          question:
+            "Identify the singular noun that looks plural but takes a singular verb.",
+          options: ["cattle", "police", "measles", "trousers"],
+          answer: "measles",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'phenomenon'.",
+          options: ["phenomenons", "phenomena", "phenomenas", "phenomeni"],
+          answer: "phenomena",
+        },
+        {
+          topic: "Nouns",
+          question: "Find the compound noun written correctly in plural.",
+          options: [
+            "editors-in-chief",
+            "editor-in-chiefs",
+            "editors-in-chiefs",
+            "editor-ins-chief",
+          ],
+          answer: "editors-in-chief",
+        },
+        {
+          topic: "Nouns",
+          question: "Which word represents a group of wolves?",
+          options: ["flock", "herd", "pack", "swarm"],
+          answer: "pack",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'stimulus'.",
+          options: ["stimuluses", "stimuli", "stimulises", "stimulae"],
+          answer: "stimuli",
+        },
+        {
+          topic: "Nouns",
+          question: "Which noun is uncountable?",
+          options: ["furniture", "table", "chair", "desk"],
+          answer: "furniture",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'wolf'.",
+          options: ["wolfs", "wolves", "wolfes", "wolv"],
+          answer: "wolves",
+        },
+        {
+          topic: "Nouns",
+          question:
+            "Identify the correct possessive form: 'The coats of the ladies'.",
+          options: [
+            "the ladies coat's",
+            "the ladies' coats",
+            "the lady's coats",
+            "the ladieses coats",
+          ],
+          answer: "the ladies' coats",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'cactus'.",
+          options: ["cactuses", "cacti", "cactus", "cactae"],
+          answer: "cacti",
+        },
+        {
+          topic: "Nouns",
+          question: "Which of the following is a collective noun for bees?",
+          options: ["herd", "swarm", "pack", "school"],
+          answer: "swarm",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'datum'.",
+          options: ["datums", "data", "datas", "daties"],
+          answer: "data",
+        },
+        {
+          topic: "Nouns",
+          question: "Find the odd one out (countable noun):",
+          options: ["information", "advice", "knowledge", "fact"],
+          answer: "fact",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'axis'.",
+          options: ["axises", "axes", "axises", "axys"],
+          answer: "axes",
+        },
+        {
+          topic: "Nouns",
+          question: "What is the plural form of 'ox'?",
+          options: ["oxes", "oxen", "oxs", "oxies"],
+          answer: "oxen",
+        },
+        {
+          topic: "Nouns",
+          question: "Identify the collective noun for fish.",
+          options: ["school", "flock", "pride", "pack"],
+          answer: "school",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'syllabus'.",
+          options: ["syllabuses", "syllabi", "Both A and B", "syllabae"],
+          answer: "Both A and B",
+        },
+        {
+          topic: "Nouns",
+          question: "Which of these nouns is uncountable?",
+          options: ["coin", "money", "note", "dollar"],
+          answer: "money",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'loaf'.",
+          options: ["loafs", "loaves", "loafes", "loafies"],
+          answer: "loaves",
+        },
+        {
+          topic: "Nouns",
+          question:
+            "What is the possessive form for a room belonging to two brothers (John and Tom)?",
+          options: [
+            "John's and Tom's room",
+            "John and Tom's room",
+            "Johns and Toms room",
+            "John and Toms' room",
+          ],
+          answer: "John and Tom's room",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'goose'.",
+          options: ["gooses", "geese", "geeses", "goosie"],
+          answer: "geese",
+        },
+        {
+          topic: "Nouns",
+          question: "Which noun is always used with a plural verb?",
+          options: ["politics", "cattle", "news", "gymnastics"],
+          answer: "cattle",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'crisis'.",
+          options: ["crises", "crisises", "crisies", "crisis"],
+          answer: "crises",
+        },
+        {
+          topic: "Nouns",
+          question: "Identify the uncountable noun representing weather.",
+          options: ["wind", "shower", "cloud", "lightning"],
+          answer: "lightning",
+        },
+        {
+          topic: "Nouns",
+          question: "Choose the correct plural form of 'focus'.",
+          options: ["focuses", "foci", "Both A and B", "focusses"],
+          answer: "Both A and B",
+        },
+        {
+          topic: "Nouns",
+          question: "What is the plural of 'man-servant'?",
+          options: [
+            "man-servants",
+            "men-servant",
+            "men-servants",
+            "man-servantes",
+          ],
+          answer: "men-servants",
+        },
 
-        /* =======================
-PRONOUNS (30)
-======================= */
-
-        ...Array.from({ length: 30 }, (_, i) => ({
+        // --- PRONOUNS (31-60) ---
+        {
           topic: "Pronouns",
-          question: `Choose correct pronoun sentence #${i + 1}`,
-          options: ["He", "Him", "His", "Himself"],
-          answer: "He",
-        })),
+          question: "Neither of the students brought ______ homework.",
+          options: ["their", "his or her", "they", "theirs"],
+          answer: "his or her",
+        },
+        {
+          topic: "Pronouns",
+          question: "She cut ______ while cutting the vegetables.",
+          options: ["her", "herself", "himself", "hers"],
+          answer: "herself",
+        },
+        {
+          topic: "Pronouns",
+          question: "To ______ did you send the invitation letter?",
+          options: ["who", "whom", "whose", "which"],
+          answer: "whom",
+        },
+        {
+          topic: "Pronouns",
+          question: "My car is blue, but ______ is red.",
+          options: ["your", "yours", "you", "your's"],
+          answer: "yours",
+        },
+        {
+          topic: "Pronouns",
+          question: "The dog wagged ______ tail happily.",
+          options: ["it's", "its", "their", "his"],
+          answer: "its",
+        },
+        {
+          topic: "Pronouns",
+          question: "Is there ______ in the room? I heard a noise.",
+          options: ["someone", "anyone", "no one", "anything"],
+          answer: "anyone",
+        },
+        {
+          topic: "Pronouns",
+          question: "They blame ______ for the accident.",
+          options: ["each other", "themselves", "theirselves", "them"],
+          answer: "themselves",
+        },
+        {
+          topic: "Pronouns",
+          question: "This is the man ______ car was stolen yesterday.",
+          options: ["who", "whom", "whose", "which"],
+          answer: "whose",
+        },
+        {
+          topic: "Pronouns",
+          question: "I can't find my keys ______.",
+          options: ["somewhere", "anywhere", "nowhere", "everywhere"],
+          answer: "anywhere",
+        },
+        {
+          topic: "Pronouns",
+          question: "Both Tom and Mary did ______ best to win.",
+          options: ["his", "her", "their", "theirs"],
+          answer: "their",
+        },
+        {
+          topic: "Pronouns",
+          question: "The house ______ we bought last year needs repair.",
+          options: ["who", "which", "whose", "whom"],
+          answer: "which",
+        },
+        {
+          topic: "Pronouns",
+          question: "Let you and ______ try to solve this together.",
+          options: ["I", "me", "my", "myself"],
+          answer: "me",
+        },
+        {
+          topic: "Pronouns",
+          question: "One should always take care of ______ health.",
+          options: ["his", "their", "one's", "her"],
+          answer: "one's",
+        },
+        {
+          topic: "Pronouns",
+          question: "The two sisters always help ______.",
+          options: ["each other", "one another", "themselves", "herself"],
+          answer: "each other",
+        },
+        {
+          topic: "Pronouns",
+          question: "He is the smartest boy ______ I have ever met.",
+          options: ["which", "whose", "that", "whom"],
+          answer: "that",
+        },
+        {
+          topic: "Pronouns",
+          question: "______ of the two plans is better?",
+          options: ["What", "Which", "Who", "Whose"],
+          answer: "Which",
+        },
+        {
+          topic: "Pronouns",
+          question:
+            "There is ______ milk left in the fridge; we need to buy some.",
+          options: ["little", "few", "a little", "a few"],
+          answer: "little",
+        },
+        {
+          topic: "Pronouns",
+          question: "He succeeded by ______ without any help.",
+          options: ["him", "himself", "his", "he"],
+          answer: "himself",
+        },
+        {
+          topic: "Pronouns",
+          question: "I met a woman ______ sister is a famous doctor.",
+          options: ["who", "whose", "whom", "that"],
+          answer: "whose",
+        },
+        {
+          topic: "Pronouns",
+          question: "______ wants to join the club is welcome.",
+          options: ["Whoever", "Whomever", "Whatever", "Who"],
+          answer: "Whoever",
+        },
+        {
+          topic: "Pronouns",
+          question: "The books on the table are ______.",
+          options: ["my", "mine", "me", "myself"],
+          answer: "mine",
+        },
+        {
+          topic: "Pronouns",
+          question: "Can ______ solve this difficult math problem?",
+          options: ["somebody", "anybody", "nobody", "everybody"],
+          answer: "anybody",
+        },
+        {
+          topic: "Pronouns",
+          question: "We enjoyed ______ very much at the party.",
+          options: ["us", "our", "ourselves", "each other"],
+          answer: "ourselves",
+        },
+        {
+          topic: "Pronouns",
+          question: "______ of the keys fits the lock, so we are locked out.",
+          options: ["None", "Neither", "Either", "Any"],
+          answer: "None",
+        },
+        {
+          topic: "Pronouns",
+          question: "The laptop ______ is on the desk belongs to John.",
+          options: ["who", "that", "whose", "whom"],
+          answer: "that",
+        },
+        {
+          topic: "Pronouns",
+          question: "They didn't give us ______ useful information.",
+          options: ["some", "any", "no", "many"],
+          answer: "any",
+        },
+        {
+          topic: "Pronouns",
+          question: "Between you and ______, I think he is lying.",
+          options: ["I", "me", "my", "myself"],
+          answer: "me",
+        },
+        {
+          topic: "Pronouns",
+          question: "______ was a beautiful summer evening.",
+          options: ["There", "It", "Its", "This"],
+          answer: "It",
+        },
+        {
+          topic: "Pronouns",
+          question: "The students ______ passed the exam were very happy.",
+          options: ["which", "who", "whom", "whose"],
+          answer: "who",
+        },
+        {
+          topic: "Pronouns",
+          question: "Is this notebook yours or ______?",
+          options: ["him", "his", "he", "her"],
+          answer: "his",
+        },
       ];
 
       let index = 0;
       let score = 0;
+      let answered = false;
 
-      // =======================
+      // =========================================================================
       // SHOW QUESTION
-      // =======================
+      // =========================================================================
 
       function showQuestion() {
+        answered = false;
         const q = questions[index];
 
         document.getElementById("quiz").innerHTML = `
-<div class="question">
-${index + 1}. ${q.question}
-</div>
-
-${q.options
-  .map(
-    (opt) => `
-<div class="option" onclick="check(this,'${opt}')">
-${opt}
-</div>
-`,
-  )
-  .join("")}
-`;
+          <div class="question-info">Topic: ${q.topic} | Question ${index + 1} of ${questions.length}</div>
+          <div class="question">${index + 1}. ${q.question}</div>
+          ${q.options
+            .map(
+              (opt) => `
+              <div class="option" onclick="check(this)">${opt}</div>
+            `,
+            )
+            .join("")}
+        `;
       }
 
-      // =======================
+      // =========================================================================
       // CHECK ANSWER
-      // =======================
+      // =========================================================================
 
-      function check(el, ans) {
+      function check(el) {
+        if (answered) return;
+        answered = true;
+
         const correct = questions[index].answer;
+        const selectedAnswer = el.textContent.trim();
 
         let options = document.querySelectorAll(".option");
-        options.forEach((o) => (o.style.pointerEvents = "none"));
 
-        if (ans === correct) {
+        options.forEach((o) => o.classList.add("disabled"));
+
+        if (selectedAnswer === correct) {
           el.classList.add("correct");
           score++;
         } else {
           el.classList.add("wrong");
 
           options.forEach((o) => {
-            if (o.innerHTML === correct) {
+            if (o.textContent.trim() === correct) {
               o.classList.add("correct");
             }
           });
         }
       }
 
-      // =======================
+      // =========================================================================
       // NEXT QUESTION
-      // =======================
+      // =========================================================================
 
       function nextQ() {
+        if (!answered && index < questions.length) {
+          alert("Iltimos, avval variantlardan birini tanlang!");
+          return;
+        }
+
         index++;
 
         if (index >= questions.length) {
-          document.getElementById("quiz").innerHTML = "";
+          document.getElementById("quiz").innerHTML =
+            "<h3 class='result-title'>Test yakunlandi!</h3>";
           document.getElementById("score").innerHTML =
-            `Score: ${score} / ${questions.length}`;
+            `Sizning natijangiz: ${score} / ${questions.length}`;
+          document.querySelector(".test-btn").style.display = "none";
           return;
         }
 
         showQuestion();
       }
 
-      // start
+      // Start the application
       showQuestion();
     </script>
   </body>
