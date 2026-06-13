@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DTM Grammar Quiz</title>
+
+    <style>
+      body {
+        font-family: Arial;
+        background: #f4f4f4;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      .question {
+        font-size: 20px;
+        margin: 15px 0;
+      }
+
+      .option {
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .option:hover {
+        background: #eee;
+      }
+
+      .correct {
+        background: #4caf50;
+        color: white;
+      }
+
+      .wrong {
+        background: #f44336;
+        color: white;
+      }
+
+      button {
+        padding: 10px 15px;
+        margin-top: 10px;
+        border: none;
+        background: #2196f3;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>DTM Grammar Quiz (60 Questions)</h2>
+
+      <div id="quiz"></div>
+
+      <button onclick="nextQ()">Next</button>
+
+      <h3 id="score"></h3>
+    </div>
+
+    <script>
+      // =======================
+      // QUESTIONS (60 total)
+      // =======================
+
+      const questions = [
+        /* =======================
+NOUNS (30)
+======================= */
+
+        ...Array.from({ length: 30 }, (_, i) => ({
+          topic: "Nouns",
+          question: `Choose correct plural form #${i + 1}`,
+          options: ["book", "books", "bookes", "bok"],
+          answer: "books",
+        })),
+
+        /* =======================
+PRONOUNS (30)
+======================= */
+
+        ...Array.from({ length: 30 }, (_, i) => ({
+          topic: "Pronouns",
+          question: `Choose correct pronoun sentence #${i + 1}`,
+          options: ["He", "Him", "His", "Himself"],
+          answer: "He",
+        })),
+      ];
+
+      let index = 0;
+      let score = 0;
+
+      // =======================
+      // SHOW QUESTION
+      // =======================
+
+      function showQuestion() {
+        const q = questions[index];
+
+        document.getElementById("quiz").innerHTML = `
+<div class="question">
+${index + 1}. ${q.question}
+</div>
+
+${q.options
+  .map(
+    (opt) => `
+<div class="option" onclick="check(this,'${opt}')">
+${opt}
+</div>
+`,
+  )
+  .join("")}
+`;
+      }
+
+      // =======================
+      // CHECK ANSWER
+      // =======================
+
+      function check(el, ans) {
+        const correct = questions[index].answer;
+
+        let options = document.querySelectorAll(".option");
+        options.forEach((o) => (o.style.pointerEvents = "none"));
+
+        if (ans === correct) {
+          el.classList.add("correct");
+          score++;
+        } else {
+          el.classList.add("wrong");
+
+          options.forEach((o) => {
+            if (o.innerHTML === correct) {
+              o.classList.add("correct");
+            }
+          });
+        }
+      }
+
+      // =======================
+      // NEXT QUESTION
+      // =======================
+
+      function nextQ() {
+        index++;
+
+        if (index >= questions.length) {
+          document.getElementById("quiz").innerHTML = "";
+          document.getElementById("score").innerHTML =
+            `Score: ${score} / ${questions.length}`;
+          return;
+        }
+
+        showQuestion();
+      }
+
+      // start
+      showQuestion();
+    </script>
+  </body>
+</html>

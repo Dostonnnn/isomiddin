@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DTM & CEFR English Grammar Master Platform</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-left">
+        <button id="toggle-sidebar-btn" class="icon-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+        <a href="./test.html">
+          <button class="test-btn">📝 Testlarga o‘tish</button>
+        </a>
+        <div class="logo-area">
+          <h1>DTM <span class="accent-text">Grammar</span></h1>
+          <p>Milliylik va CEFR imtihonlari platformasi</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="progress-container-top">
+          <span class="progress-label"
+            >Umumiy progress:
+            <strong id="global-progress-percent">0%</strong></span
+          >
+          <div class="progress-bar-wrapper">
+            <div id="global-progress-bar" class="progress-bar-fill"></div>
+          </div>
+        </div>
+        <button id="theme-toggle-btn" class="icon-btn">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="main-container">
+      <!-- Yon Panel: Mavzular ro'yxati -->
+      <aside class="sidebar" id="app-sidebar">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input
+            type="text"
+            id="topic-search"
+            placeholder="Mavzuni qidirish..."
+          />
+        </div>
+        <div class="filter-box">
+          <button class="filter-btn active" data-filter="all">Barchasi</button>
+          <button class="filter-btn" data-filter="basic">Basic</button>
+          <button class="filter-btn" data-filter="verbs">Verbs</button>
+          <button class="filter-btn" data-filter="tenses">Tenses</button>
+          <button class="filter-btn" data-filter="adv">Advanced</button>
+        </div>
+        <nav class="topic-list" id="sidebar-topic-list"></nav>
+      </aside>
+
+      <!-- Asosiy Kontent Joyi -->
+      <main class="content-area">
+        <div id="welcome-screen" class="card central-card animate-fade">
+          <div class="welcome-banner">
+            <i class="fas fa-graduation-cap welcome-icon"></i>
+            <h2>DTM & CEFR Grammatika Kursiga Xush Kelibsiz!</h2>
+            <p>
+              Ushbu platforma yordamida Ingliz tili grammatikasini "Alphabet"dan
+              boshlab "Advanced" darajagacha toʻliq oʻrganasiz. Har bir mavzuda
+              batafsil oʻzbekcha tushuntirishlar, DTM tuzoqlari, testlar va
+              mukammal namunalar jamlangan.
+            </p>
+          </div>
+          <div class="quick-stats">
+            <div class="stat-card">
+              <i class="fas fa-book"></i>
+              <h3 id="stat-total-lessons">70+</h3>
+              <p>Toʻliq Mavzular</p>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-check-circle"></i>
+              <h3 id="stat-completed-lessons">0</h3>
+              <p>Tugatilgan</p>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-trophy"></i>
+              <h3 id="stat-average-score">0%</h3>
+              <p>Oʻrtacha Ball</p>
+            </div>
+          </div>
+          <button id="start-learning-btn" class="btn btn-primary btn-large">
+            Oʻrganishni Boshlash <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <article id="lesson-viewer" class="lesson-layout hidden animate-fade">
+          <!-- Mavzu Sarlavhasi va Boshqaruv elementlari -->
+          <div class="lesson-header-card card">
+            <div class="lesson-header-meta">
+              <span id="lesson-category" class="badge">Category</span>
+              <h2 id="lesson-title">Mavzu Nomi</h2>
+            </div>
+            <div class="lesson-actions">
+              <button id="mark-complete-btn" class="btn btn-success">
+                <i class="fas fa-check"></i> Tugatdim
+              </button>
+            </div>
+          </div>
+
+          <!-- O'zbek tilida tushuntirish va formulalar -->
+          <section class="card lesson-section">
+            <h3><i class="fas fa-book-open"></i> Mavzu Tushuntirishi</h3>
+            <div id="lesson-explanation" class="text-content"></div>
+          </section>
+
+          <section class="card lesson-section formula-section">
+            <h3>
+              <i class="fas fa-square-root-variable"></i> Grammatik Formula &
+              Formation
+            </h3>
+            <div id="lesson-formula" class="formula-box"></div>
+            <div id="lesson-formation" class="text-content mt-3"></div>
+          </section>
+
+          <!-- Gap turlari: Positive, Negative, Question -->
+          <section class="card lesson-section structure-section">
+            <h3>
+              <i class="fas fa-gears"></i> Gap Tuzilmalari (Sentences
+              Structures)
+            </h3>
+            <div class="structure-grid">
+              <div class="structure-card pos">
+                <h4><i class="fas fa-plus-circle"></i> Positive</h4>
+                <div id="structure-positive"></div>
+              </div>
+              <div class="structure-card neg">
+                <h4><i class="fas fa-minus-circle"></i> Negative</h4>
+                <div id="structure-negative"></div>
+              </div>
+              <div class="structure-card ques">
+                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                <div id="structure-question"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 10+ Mukammal Misollar -->
+          <section class="card lesson-section">
+            <h3>
+              <i class="fas fa-list-check"></i> Gaplardagi Namunalar (10+
+              Examples)
+            </h3>
+            <ul id="lesson-examples" class="example-list"></ul>
+          </section>
+
+          <!-- DTM Tuzoqlari va Muhim Eslatmalar -->
+          <div class="dual-grid">
+            <section class="card lesson-section alert-card danger">
+              <h3>
+                <i class="fas fa-triangle-exclamation"></i> Koʻp Yoʻl
+                Qoʻyiladigan Xatolar (Common Mistakes)
+              </h3>
+              <div id="lesson-mistakes"></div>
+            </section>
+            <section class="card lesson-section alert-card warning">
+              <h3>
+                <i class="fas fa-bullseye"></i> DTM Imtihon Tuzoqlari (DTM Exam
+                Tips)
+              </h3>
+              <div id="lesson-dtm-tips"></div>
+            </section>
+          </div>
+
+          <section class="card lesson-section alert-card info">
+            <h3>
+              <i class="fas fa-circle-info"></i> Muhim Eslatmalar (Important
+              Notes)
+            </h3>
+            <div id="lesson-notes"></div>
+          </section>
+
+          <!-- Practice Mashqlar Bo'limi -->
+          <section class="card lesson-section">
+            <h3>
+              <i class="fas fa-pen-to-square"></i> Mustaqil Mashq (Practice
+              Section)
+            </h3>
+            <div id="lesson-practice" class="text-content"></div>
+          </section>
+
+          <!-- Interaktiv Quiz Test Bo'limi -->
+          <section class="card lesson-section quiz-area">
+            <h3>
+              <i class="fas fa-vial"></i> Mavzulashtirilgan Test (Quiz Section)
+            </h3>
+            <form id="quiz-form">
+              <div id="quiz-questions-container"></div>
+              <button
+                type="button"
+                id="submit-quiz-btn"
+                class="btn btn-primary mt-4"
+              >
+                Javoblarni Tekshirish
+              </button>
+            </form>
+            <div id="quiz-result-box" class="quiz-result hidden">
+              <h4>Natija: <span id="quiz-score-text">0/5</span></h4>
+              <div class="progress-bar-wrapper">
+                <div id="quiz-score-bar" class="progress-bar-fill"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- To'g'ri javoblar kaliti va tahlili -->
+          <section
+            id="answers-section"
+            class="card lesson-section hidden border-success"
+          >
+            <h3>
+              <i class="fas fa-key"></i> Toʻgʻri Javoblar va Tahlil (Correct
+              Answers)
+            </h3>
+            <div id="lesson-answers" class="text-content"></div>
+          </section>
+
+          <!-- Xulosa -->
+          <section class="card lesson-section summary-card">
+            <h3>
+              <i class="fas fa-flag-checkered"></i> Mavzu Haqida Qisqa Xulosa
+              (Summary)
+            </h3>
+            <div id="lesson-summary" class="text-content"></div>
+          </section>
+        </article>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
